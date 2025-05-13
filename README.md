@@ -4,7 +4,7 @@ A Python package for computing Value-at-Risk (VaR), Expected Shortfall (ES), bac
 
 ---
 
-## 🌂 Installation
+## 📦 Installation
 
 ```bash
 # 1. Clone the repo
@@ -39,7 +39,7 @@ Risk_Project/
 │   ├── 01_data_loader.ipynb
 │   ├── 02_calibration.ipynb
 │   ├── 03_var_es.ipynb
-│   ├── 04_backtest.ipynb   # updated with Q4/Q5 visuals & summaries
+│   ├── 04_backtest.ipynb    # rolling-window backtests and visual summaries
 │   └── 05_black_scholes.ipynb
 ├── src/
 │   └── risk_project/       # Python package
@@ -64,7 +64,7 @@ Risk_Project/
 
 ---
 
-## 📬 Usage
+## 🎯 Usage
 
 ### From Python
 
@@ -99,14 +99,14 @@ print(f"Call price: ${price:.2f}")
 
 ---
 
-## 📑 Notebooks
+## 📝 Notebooks
 
-Each file under `notebooks/` is a step-by-step Jupyter walkthrough:
+Step-by-step Jupyter walkthroughs are provided under `notebooks/`:
 
 1. **01\_data\_loader.ipynb**   — load CSVs into pandas
 2. **02\_calibration.ipynb**   — estimate μ, σ, and covariance
 3. **03\_var\_es.ipynb**        — compute static VaR & ES
-4. **04\_backtest.ipynb**      — rolling-window backtests of VaR & ES, with Q4/Q5 visuals
+4. **04\_backtest.ipynb**      — rolling-window backtests with summary tables and plots
 5. **05\_black\_scholes.ipynb** — Black–Scholes option pricing checks
 
 Launch with:
@@ -117,9 +117,10 @@ jupyter lab   # or `jupyter notebook`
 
 ---
 
-## ✅ Testing
+## ✅ Testing & Modules
 
-We use **pytest**. To run the full suite:
+* The `tests/` folder contains pytest suites for each module.
+* Run all tests with:
 
 ```bash
 pytest -q
