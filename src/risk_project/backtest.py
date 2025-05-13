@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from scipy.stats import chi2
+from scipy.stats import chi2, norm
 from typing import Dict, Tuple
 
 def compute_portfolio_pnl(
@@ -62,37 +62,37 @@ def kupiec_test(
     p: float
 ) -> Tuple[float, float]:
     """
-    Perform Kupiec proportion-of-failures test.
+    Kupiec Unconditional Coverage test (proportion-of-failures).
 
     Parameters
     ----------
-    k : int
-        Number of exceptions observed.
-    n : int
-        Total number of trials/days.
-    p : float, default 0.99
-        Target non-exception probability.
+    n_exceptions : int
+        Number of VaR exceptions observed.
+    n_obs : int
+        Total number of observations (days).
+    p : float
+        VaR confidence level (e.g. 0.99 → p0=0.01 expected failure rate).
 
     Returns
     -------
     lr_stat : float
-        Kupiec likelihood-ratio statistic.
+        Likelihood‐ratio statistic.
     p_value : float
-        p-value for the test.
-
-    Raises
-    ------
-    ValueError
-        If n <= 0 or k not in [0, n].
+        p‐value from chi‐square(1) test.
     """
-    # edge‐cases: no exceptions or all exceptions → perfect fit
+    # perfect fit
     if n_exceptions == 0 or n_exceptions == n_obs:
         return 0.0, 1.0
 
-    pi = n_exceptions / n_obs
-    # log‐likelihood ratio
-    L0 = (1 - p)**(n_obs - n_exceptions) * p**n_exceptions
-    L1 = (1 - pi)**(n_obs - n_exceptions) * pi**n_exceptions
-    lr = -2 * np.log(L0 / L1)
-    p_value = 1 - chi2.cdf(lr, df=1)
-    return lr, p_value
+    x  = n_exceptions
+    n  = n_obs
+    p0 = 1.0 - p   # expected exception probability
+
+    # log‐likelihood under H1 (empirical failure rate x/n)
+    l1 = x * np.log(x / n) + (n - x) * np.log((n - x) / n)
+    # log‐likelihood under H0 (failure rate = p0)
+    l0 = x * np.log(p0)   + (n - x) * np.log(1.0 - p0)
+
+    lr_stat = 2.0 * (l1 - l0)
+    p_value = 1.0 - chi2.cdf(lr_stat, df=1)
+    return lr_stat, p_value
