@@ -4,7 +4,7 @@ A Python package for computing Value-at-Risk (VaR), Expected Shortfall (ES), bac
 
 ---
 
-## 📦 Installation
+## 🌂 Installation
 
 ```bash
 # 1. Clone the repo
@@ -15,7 +15,7 @@ cd Risk_Project
 python3 -m venv .venv
 # on macOS / Linux:
 source .venv/bin/activate  
-# on Windows PowerShell:a
+# on Windows PowerShell:
 # .venv\Scripts\Activate.ps1
 
 # 3. Install dependencies
@@ -30,7 +30,8 @@ pytest -q
 
 ---
 
-## 🗂 Project Structure
+## 📁 Project Structure
+
 ```
 Risk_Project/
 ├── data/                   # CSV price histories
@@ -38,7 +39,7 @@ Risk_Project/
 │   ├── 01_data_loader.ipynb
 │   ├── 02_calibration.ipynb
 │   ├── 03_var_es.ipynb
-│   ├── 04_backtest.ipynb
+│   ├── 04_backtest.ipynb   # updated with Q4/Q5 visuals & summaries
 │   └── 05_black_scholes.ipynb
 ├── src/
 │   └── risk_project/       # Python package
@@ -60,9 +61,10 @@ Risk_Project/
 ├── .gitignore
 └── README.md               # this file
 ```
+
 ---
 
-## 🎯 Usage
+## 📬 Usage
 
 ### From Python
 
@@ -75,7 +77,7 @@ from risk_project.backtest       import compute_portfolio_pnl, compute_exception
 from risk_project.black_scholes  import bs_call, bs_put
 
 # 1) Load data
-series   = load_price_series(["data/AAPL-bloomberg.csv", "data/AMZN-bloomberg.csv"])
+series    = load_price_series(["data/AAPL-bloomberg.csv", "data/AMZN-bloomberg.csv"])
 positions = {"AAPL": 100_000 / series["AAPL"].iloc[-1],
              "AMZN": 100_000 / series["AMZN"].iloc[-1]}
 
@@ -94,45 +96,31 @@ print(f"Parametric 1-day 99% VaR: ${var:,.0f}, ES: ${es:,.0f}")
 price = bs_call(S=100, K=100, vol=0.2, r=0.01, T=1.0)
 print(f"Call price: ${price:.2f}")
 ```
+
 ---
 
-## 4) Add “Notebooks” section
-
-**Paste** this **next**:
-
-```markdown
----
-
-## 📝 Notebooks
+## 📑 Notebooks
 
 Each file under `notebooks/` is a step-by-step Jupyter walkthrough:
 
-1. **01_data_loader.ipynb**   — load CSVs into pandas  
-2. **02_calibration.ipynb**   — estimate μ, σ, and covariance  
-3. **03_var_es.ipynb**        — compute static VaR & ES  
-4. **04_backtest.ipynb**      — rolling‐window backtests of VaR  
-5. **05_black_scholes.ipynb** — Black–Scholes option pricing checks
+1. **01\_data\_loader.ipynb**   — load CSVs into pandas
+2. **02\_calibration.ipynb**   — estimate μ, σ, and covariance
+3. **03\_var\_es.ipynb**        — compute static VaR & ES
+4. **04\_backtest.ipynb**      — rolling-window backtests of VaR & ES, with Q4/Q5 visuals
+5. **05\_black\_scholes.ipynb** — Black–Scholes option pricing checks
 
 Launch with:
 
 ```bash
 jupyter lab   # or `jupyter notebook`
 ```
----git add README.md
 
-
-## 5) Add “Testing” section
-
-**Paste** this **afterwards**:
-
-```markdown
 ---
 
 ## ✅ Testing
 
-We use [pytest]. To run the full suite:
+We use **pytest**. To run the full suite:
 
 ```bash
 pytest -q
 ```
----
