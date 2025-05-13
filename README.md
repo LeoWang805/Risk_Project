@@ -31,9 +31,9 @@ pytest -q
 ---
 
 ## 🗂 Project Structure
-
+```
 Risk_Project/
-├── data/                   # Input CSVs (e.g. AAPL-bloomberg.csv)
+├── data/                   # CSV price histories
 ├── notebooks/              # Jupyter walkthroughs
 │   ├── 01_data_loader.ipynb
 │   ├── 02_calibration.ipynb
@@ -41,7 +41,7 @@ Risk_Project/
 │   ├── 04_backtest.ipynb
 │   └── 05_black_scholes.ipynb
 ├── src/
-│   └── risk_project/       # Python package itself
+│   └── risk_project/       # Python package
 │       ├── __init__.py
 │       ├── backtest.py
 │       ├── black_scholes.py
@@ -50,15 +50,16 @@ Risk_Project/
 │       ├── data_loader.py
 │       ├── monte_carlo.py
 │       └── var_es.py
-├── tests/                  # pytest unit tests
+├── tests/                  # pytest suites
 │   ├── test_backtest.py
 │   ├── test_black_scholes.py
 │   ├── test_monte_carlo.py
-│   ├── test_var_es.py
-│   └── conftest.py
+│   └── test_var_es.py
 ├── requirements.txt        # pinned dependencies
-├── setup.py                # package install script
-└── README.md               # ← you’re here
+├── pyproject.toml          # build/config metadata
+├── .gitignore
+└── README.md               # this file
+```
 ---
 
 ## 🎯 Usage
@@ -133,11 +134,4 @@ We use [pytest]. To run the full suite:
 ```bash
 pytest -q
 
----
-
-## 6) Add “License & Authors”
-
-Finally, **paste** at the bottom:
-
-```markdown
 ---
