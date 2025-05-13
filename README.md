@@ -15,7 +15,7 @@ cd Risk_Project
 python3 -m venv .venv
 # on macOS / Linux:
 source .venv/bin/activate  
-# on Windows PowerShell:
+# on Windows PowerShell:a
 # .venv\Scripts\Activate.ps1
 
 # 3. Install dependencies
@@ -26,6 +26,7 @@ pip install -e .
 
 # 5. Run tests to verify
 pytest -q
+```
 
 ---
 
@@ -91,7 +92,7 @@ print(f"Parametric 1-day 99% VaR: ${var:,.0f}, ES: ${es:,.0f}")
 # 4) Price a vanilla call
 price = bs_call(S=100, K=100, vol=0.2, r=0.01, T=1.0)
 print(f"Call price: ${price:.2f}")
-
+```
 ---
 
 ## 4) Add “Notebooks” section
