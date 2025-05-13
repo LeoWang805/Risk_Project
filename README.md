@@ -117,8 +117,9 @@ Launch with:
 
 ```bash
 jupyter lab   # or `jupyter notebook`
+```
+---git add README.md
 
----
 
 ## 5) Add “Testing” section
 
@@ -133,5 +134,5 @@ We use [pytest]. To run the full suite:
 
 ```bash
 pytest -q
-
+```
 ---
