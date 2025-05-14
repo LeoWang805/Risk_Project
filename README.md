@@ -1,6 +1,9 @@
+Here’s a fully revised **README.md** that incorporates all of your new backtest graphs and testing features. Feel free to drop this into your repo, replacing the old README:
+
+````markdown
 # Financial Risk Toolkit
 
-A Python package for computing Value-at-Risk (VaR), Expected Shortfall (ES), backtests, and Black–Scholes option pricing.
+A Python package and Jupyter Lab walkthrough for computing Value-at-Risk (VaR), Expected Shortfall (ES), backtests, and Black–Scholes option pricing — now with extended robustness checks, P&L attribution, hedge effectiveness analysis, and data-integrity testing.
 
 ---
 
@@ -13,9 +16,9 @@ cd Risk_Project
 
 # 2. Create & activate a venv
 python3 -m venv .venv
-# on macOS / Linux:
-source .venv/bin/activate  
-# on Windows PowerShell:
+# macOS / Linux:
+source .venv/bin/activate
+# Windows PowerShell:
 # .venv\Scripts\Activate.ps1
 
 # 3. Install dependencies
@@ -26,7 +29,7 @@ pip install -e .
 
 # 5. Run tests to verify
 pytest -q
-```
+````
 
 ---
 
@@ -34,15 +37,15 @@ pytest -q
 
 ```
 Risk_Project/
-├── data/                   # CSV price histories
-├── notebooks/              # Jupyter walkthroughs
+├── data/                     # CSV price histories
+├── notebooks/                # Jupyter walkthroughs
 │   ├── 01_data_loader.ipynb
 │   ├── 02_calibration.ipynb
 │   ├── 03_var_es.ipynb
-│   ├── 04_backtest.ipynb    # rolling-window backtests and visual summaries
+│   ├── 04_backtest.ipynb     # rolling-window backtests, extended plots & tests
 │   └── 05_black_scholes.ipynb
 ├── src/
-│   └── risk_project/       # Python package
+│   └── risk_project/         # Python package
 │       ├── __init__.py
 │       ├── backtest.py
 │       ├── black_scholes.py
@@ -51,22 +54,22 @@ Risk_Project/
 │       ├── data_loader.py
 │       ├── monte_carlo.py
 │       └── var_es.py
-├── tests/                  # pytest suites
+├── tests/                    # pytest suites
 │   ├── test_backtest.py
 │   ├── test_black_scholes.py
 │   ├── test_monte_carlo.py
 │   └── test_var_es.py
-├── requirements.txt        # pinned dependencies
-├── pyproject.toml          # build/config metadata
+├── requirements.txt          # pinned dependencies
+├── pyproject.toml            # build/config metadata
 ├── .gitignore
-└── README.md               # this file
+└── README.md                 # this file
 ```
 
 ---
 
 ## 🎯 Usage
 
-### From Python
+### As a library
 
 ```python
 from risk_project.data_loader    import load_price_series
@@ -84,12 +87,12 @@ positions = {"AAPL": 100_000 / series["AAPL"].iloc[-1],
 # 2) Calibrate
 mu, sigma = {}, {}
 for sym, ps in series.items():
-    m, _ = estimate_mu_sigma(ps)
-    mu[sym] = m
-cov = estimate_covariance_matrix(series)
+    m, _  = estimate_mu_sigma(ps)
+    mu[sym]   = m
+cov        = estimate_covariance_matrix(series)
 
 # 3) Compute Parametric VaR & ES
-var, es = parametric_var_es(positions, series, mu, cov, p=0.99)
+var, es   = parametric_var_es(positions, series, mu, cov, p=0.99)
 print(f"Parametric 1-day 99% VaR: ${var:,.0f}, ES: ${es:,.0f}")
 
 # 4) Price a vanilla call
@@ -101,15 +104,32 @@ print(f"Call price: ${price:.2f}")
 
 ## 📝 Notebooks
 
-Step-by-step Jupyter walkthroughs are provided under `notebooks/`:
+Interactive guides under `notebooks/`:
 
-1. **01\_data\_loader.ipynb**   — load CSVs into pandas
-2. **02\_calibration.ipynb**   — estimate μ, σ, and covariance
-3. **03\_var\_es.ipynb**        — compute static VaR & ES
-4. **04\_backtest.ipynb**      — rolling-window backtests with summary tables and plots
-5. **05\_black\_scholes.ipynb** — Black–Scholes option pricing checks
+1. **01\_data\_loader.ipynb**
+   Load CSVs into Pandas, handle dates & missing data.
 
-Launch with:
+2. **02\_calibration.ipynb**
+   Estimate drift (μ), volatility (σ), and covariance matrices.
+
+3. **03\_var\_es.ipynb**
+   Compute static (one-shot) VaR & ES via Parametric, Historical, and Monte Carlo methods.
+
+4. **04\_backtest.ipynb**
+   Rolling-window backtests with enhanced analytics and visualizations:
+
+   * **1-Day 99% VaR backtest** with breach markers and Kupiec tests
+   * **5-Day 99% VaR & 97.5% ES comparison** (Parametric vs Historical vs Monte Carlo)
+   * **Bootstrap 95% CI** around Parametric 5-day VaR for robustness
+   * **Monte Carlo convergence** and **monotonicity vs horizon** (optional cells)
+   * **P\&L Attribution**: actual vs predicted vs residual daily P\&L
+   * **Hedge Effectiveness**: rolling‐beta hedge analysis and volatility reduction
+   * **Data Integrity checks**: missing dates, outlier counts, standardized-returns histograms
+
+5. **05\_black\_scholes.ipynb**
+   Black–Scholes call/put pricing and boundary‐case validations.
+
+Start them with:
 
 ```bash
 jupyter lab   # or `jupyter notebook`
@@ -117,11 +137,24 @@ jupyter lab   # or `jupyter notebook`
 
 ---
 
-## ✅ Testing & Modules
+## ✅ Testing & Quality
 
-* The `tests/` folder contains pytest suites for each module.
-* Run all tests with:
+* **Unit tests** in `tests/` cover every module via pytest.
 
-```bash
-pytest -q
-```
+* **Run all tests**:
+
+  ```bash
+  pytest -q
+  ```
+
+* **Continuous integration** ensures code correctness on each push.
+
+---
+
+## 📈 Visualization & Reporting
+
+* Publication-quality plots with Matplotlib (clear legends, gridlines, 2-year ticks).
+* Drop-in code cells for each new analysis or test, making it easy to extend.
+* Use this toolkit for both **research** and **production**-style risk reports.
+
+---
